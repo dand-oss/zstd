@@ -14,4 +14,8 @@ include(asv_cmake_defaults)
 asv_cmake_defaults( )
 ###############
 
+option(ZSTD_BUILD_CONTRIB "BUILD CONTRIB" OFF)
+option(ZSTD_BUILD_STATIC "BUILD STATIC LIB" ON)
+option(ZSTD_BUILD_SHARED "BUILD SHARED LIB" ON)
+
 add_subdirectory(build/cmake)
