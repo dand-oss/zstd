@@ -47,7 +47,6 @@ install(TARGETS zstd
   BUNDLE DESTINATION "${CMAKE_INSTALL_BINDIR}")
 
 if (UNIX)
-    # Create zstdcat symlink using ln -sfn
     add_custom_target(zstdcat ALL
         COMMAND ln -sfn zstd zstdcat
         DEPENDS zstd
@@ -55,7 +54,6 @@ if (UNIX)
         COMMENT "Creating zstdcat symlink"
     )
 
-    # Create unzstd symlink using ln -sfn
     add_custom_target(unzstd ALL
         COMMAND ln -sfn zstd unzstd
         DEPENDS zstd
@@ -83,7 +81,6 @@ if (UNIX)
         COMMENT "Copying manpage zstdless.1"
     )
 
-    # Create zstdcat.1 symlink using ln -sfn
     add_custom_target(zstdcat.1 ALL
         COMMAND ln -sfn zstd.1 zstdcat.1
         DEPENDS zstd.1
@@ -91,7 +88,6 @@ if (UNIX)
         COMMENT "Creating zstdcat.1 symlink"
     )
 
-    # Create unzstd.1 symlink using ln -sfn
     add_custom_target(unzstd.1 ALL
         COMMAND ln -sfn zstd.1 unzstd.1
         DEPENDS zstd.1
@@ -134,7 +130,12 @@ if (ZSTD_MULTITHREAD_SUPPORT)
     if (UNIX)
         target_link_libraries(zstd ${THREADS_LIBS})
 
-        add_custom_target(zstdmt ALL ${CMAKE_COMMAND} -E create_symlink zstd zstdmt DEPENDS zstd COMMENT "Creating zstdmt symlink")
+        add_custom_target(zstdmt ALL
+            COMMAND ln -sfn zstd zstdmt
+            DEPENDS zstd
+            WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+            COMMENT "Creating zstdmt symlink"
+        )
         install(FILES ${CMAKE_CURRENT_BINARY_DIR}/zstdmt DESTINATION "${CMAKE_INSTALL_BINDIR}")
     endif ()
 endif ()
